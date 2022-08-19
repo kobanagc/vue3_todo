@@ -1,16 +1,20 @@
 <script setup>
-import { computed,ref } from 'vue'
+import { ref } from 'vue'
 
-const message = computed(() => {
-  return 'ようこそ<strong>' + myName.value + '</strong>さん'
-})
-const welcomeColor = 'red'
-const myName = ref('')
+const todos = ref([])
+const newTodo = ref('')
+
+const addTodo = () => {
+  todos.value.push(newTodo.value)
+  newTodo.value = ''
+}
 </script>
 
 <template>
-<h1>Vue 3</h1>
-<p>お名前は？：<input type="text" size="30" v-model="myName"></p>
-<p v-html="message" v-bind:style="{color: welcomeColor}"></p>
-</template>
+<input type="text" size="30" v-model="newTodo">
+<button @click="addTodo()">追加</button>
 
+<ul>
+  <li v-for="(todo, i) in todos" v-bind:key="i">{{i}}.{{ todo }}</li>
+</ul>
+</template>
